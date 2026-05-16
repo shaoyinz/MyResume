@@ -1,0 +1,265 @@
+% Generic one-page resume template (RenderCV-style layout).
+%
+% This is the structural starting point for every base resume. The /extract-profile
+% skill copies this file to base/<role>/main.tex and fills it from your real resume.
+% You can also copy it by hand:  cp base/_template/main.tex base/<role>/main.tex
+%
+% Replace every placeholder marked <LIKE THIS>. Keep the layout — it is tuned to fit
+% one letter-size page. Build with:  latexmk -pdf -interaction=nonstopmode main.tex
+
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=0.3 cm, % seperation between body and page edge from the top
+    bottom=0.3 cm, % seperation between body and page edge from the bottom
+    left=1.5 cm, % seperation between body and page edge from the left
+    right=1.5 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Your Name's Resume},
+    pdfauthor={Your Name},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.15 cm
+}{
+    % bottom space:
+    0.15 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{twocolumnentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 6 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+        \fontsize{20 pt}{20 pt}\selectfont Your Name
+
+        \normalsize
+        \kern 5.0 pt%
+        \mbox{Role Title}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{your.email@example.com}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{(000)-000-0000}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://github.com/yourhandle}{GitHub}}%
+    \end{header}
+
+    \section{Summary}
+    Two- to three-sentence summary of who you are professionally, your strongest
+    skills, and the kind of work you do. Replace this with content tailored from
+    your real resume.
+
+    \section{Professional Experience}
+        \begin{twocolentry}{
+            City, ST
+        }
+            \textbf{Most Recent Employer}\end{twocolentry}
+        \vspace{0.05 cm}
+        \begin{twocolentry}{
+            Mon YYYY -- Mon YYYY
+        }
+            \textit{Job Title}\end{twocolentry}
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Accomplishment bullet: what you did, the tools you used, and the
+                measurable result.
+                \item Another accomplishment bullet, quantified where possible.
+            \end{highlights}
+        \end{onecolentry}
+        \vspace{0.10 cm}
+
+        \begin{twocolentry}{
+            City, ST
+        }
+            \textbf{Previous Employer}\end{twocolentry}
+        \vspace{0.05 cm}
+        \begin{twocolentry}{
+            Mon YYYY -- Mon YYYY
+        }
+            \textit{Job Title}\end{twocolentry}
+        \vspace{0.05 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Accomplishment bullet.
+                \item Accomplishment bullet.
+            \end{highlights}
+        \end{onecolentry}
+
+    \section{Education}
+        \begin{twocolentry}{
+            Mon YYYY -- Mon YYYY
+        }
+            \textbf{University Name}, Degree and Field of Study\end{twocolentry}
+        \begin{onecolentry}
+            \begin{highlights}
+                \begin{twocolentry}{
+                    \textbf{GPA:} 0.0/4.0
+                }
+                    \textbf{Relevant coursework / focus:} list here
+                \end{twocolentry}
+            \end{highlights}
+        \end{onecolentry}
+
+    \section{Projects}
+        \begin{twocolentry}{
+        }
+            \textbf{Project Name}\end{twocolentry}
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item What the project did, the stack, and the outcome.
+            \end{highlights}
+        \end{onecolentry}
+
+    \section{Technical Skills}
+    \begin{onecolentry}
+        \begin{highlightsforbulletentries}
+            \item \textbf{Category:} skill, skill, skill
+            \item \textbf{Category:} skill, skill, skill
+            \item \textbf{Category:} skill, skill, skill
+        \end{highlightsforbulletentries}
+    \end{onecolentry}
+
+\end{document}

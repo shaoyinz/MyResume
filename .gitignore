@@ -17,6 +17,8 @@ shared/profile.md
 # Base resumes hard-code name/phone/email
 base/*/main.tex
 base/chinese/
+# ...except the generic template, which ships so newcomers have a starting layout.
+!base/_template/main.tex
 
 # Build output directories produced by the build-pdf skill
 **/out/
