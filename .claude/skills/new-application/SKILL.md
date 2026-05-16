@@ -1,6 +1,6 @@
 ---
 name: new-application
-description: Scaffold a new job application folder under applications/ with jd.md, notes.md, and a resume.tex copied from a chosen base/ role.
+description: Scaffold a new job application folder under applications/ with jd.md, notes.md, questions.md, and a resume.tex copied from a chosen base/ role.
 ---
 
 # new-application
@@ -9,6 +9,7 @@ Use when the user is starting a new job application. Creates `applications/<slug
 
 - `jd.md` — empty stub for pasting the job description
 - `notes.md` — empty stub for tailoring decisions
+- `questions.md` — empty stub for pasting screening / application-form questions
 - `resume.tex` — copied from the chosen base
 - `out/` — empty directory for built PDFs
 
@@ -24,11 +25,11 @@ Ask the user (one at a time, only if not provided):
 
 1. Verify `base/<role>/` exists; list available bases if not.
 2. Verify `applications/<slug>/` does NOT already exist. If it does, ask before overwriting.
-3. Create `applications/<slug>/{jd.md,notes.md,out/}`.
+3. Create `applications/<slug>/{jd.md,notes.md,questions.md,out/}`. Copy `jd.md`, `notes.md`, and `questions.md` from `applications/_template/` (or write the equivalent stubs).
 4. Copy `base/<role>/main.tex` to `applications/<slug>/resume.tex` (note: for `chinese`, the source files are `resume-en.tex`/`resume-zh.tex` and `resume.cls` — copy all three).
-5. Print the folder path and tell the user to paste the JD into `jd.md`, then invoke `/tailor-resume <slug>`.
+5. Print the folder path and tell the user to paste the JD into `jd.md`, then invoke `/tailor-resume <slug>`. They can also paste screening questions into `questions.md` later and run `/answer-questions <slug>`.
 
 ## Do not
 
-- Do not pre-fill jd.md with placeholder content beyond a single comment line.
+- Do not pre-fill jd.md or questions.md with placeholder content beyond the template's comment line.
 - Do not modify base/ files. Bases are read-only templates.

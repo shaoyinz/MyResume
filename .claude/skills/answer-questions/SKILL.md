@@ -13,12 +13,12 @@ Use when the user has finished tailoring a resume and now needs to write answers
 
 ## Preconditions
 
-- `applications/<slug>/questions.md` exists and is non-empty.
+- `applications/<slug>/questions.md` exists with real questions in it. `new-application` scaffolds this file as a stub — if it still only contains the hint comment, stop and tell the user to paste their screening questions into it first.
 - `applications/<slug>/resume.tex` exists (ideally already tailored — warn if it looks untouched vs. the base).
 - `applications/<slug>/jd.md` exists and is non-empty.
 - `shared/profile.md` exists.
 
-If any are missing, stop and tell the user what's needed. If `questions.md` does not exist, offer to create an empty stub for the user to paste into.
+If any are missing, stop and tell the user what's needed. If `questions.md` does not exist at all (older folder predating the stub), create the stub from `applications/_template/questions.md` and ask the user to paste their questions.
 
 ## Question format
 
