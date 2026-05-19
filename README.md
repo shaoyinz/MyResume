@@ -3,8 +3,8 @@
 A [Claude Code](https://claude.com/claude-code)–driven system for tailoring a LaTeX
 resume to each job you apply to. You keep one source-of-truth profile and a few base
 resumes; Claude Code skills scaffold a per-application folder, rewrite the resume to
-match the job description, draft cover letters, answer screening questions, and build
-the PDFs.
+match the job description, draft cover letters, answer screening questions, prep you
+for interviews, and build the PDFs.
 
 Every claim a skill makes is traceable to your `shared/profile.md` — the skills are
 instructed to **never invent** experience, metrics, or skills.
@@ -33,7 +33,7 @@ instructed to **never invent** experience, metrics, or skills.
 
 3. **Start an application.** Run `/new-application`. It asks for a company slug and a
    role base, then scaffolds `applications/<company>-<role>/` with `jd.md`,
-   `notes.md`, `questions.md`, `resume.tex`, and `out/`.
+   `notes.md`, `questions.md`, `outreach.md`, `resume.tex`, and `out/`.
 
 4. **Paste the job description** into `applications/<slug>/jd.md`.
 
@@ -45,20 +45,25 @@ instructed to **never invent** experience, metrics, or skills.
    - `/cover-letter <slug>` — drafts `cover-letter.tex`; build it with `/build-pdf`.
    - Paste screening / application-form questions into `questions.md`, then
      `/answer-questions <slug>` to draft answers into `notes.md`.
+   - When an interview is scheduled, paste the outreach email into `outreach.md`,
+     then `/interview-prep <slug>` to analyze it, research the company's interview
+     process, and draft likely questions with answers into `interview-prep.md`.
 
 ## Skills
 
 | Skill | What it does |
 |-------|--------------|
 | `/extract-profile` | Reads your existing resume → populates `shared/profile.md` and a starter `base/<role>/main.tex`. Run once during setup. |
-| `/new-application` | Scaffolds `applications/<slug>/` with `jd.md`, `notes.md`, `questions.md`, `resume.tex`, and `out/`. |
+| `/new-application` | Scaffolds `applications/<slug>/` with `jd.md`, `notes.md`, `questions.md`, `outreach.md`, `resume.tex`, and `out/`. |
 | `/tailor-resume` | Rewrites an application's `resume.tex` to match its `jd.md`, drawing facts only from `profile.md`. |
 | `/cover-letter` | Drafts a `cover-letter.tex` for an application from the JD, resume, and profile. |
 | `/answer-questions` | Drafts answers to the questions in `questions.md`, grounded in the resume and profile. |
+| `/interview-prep` | Analyzes the outreach email in `outreach.md`, researches the company's interview process online, and drafts likely questions with answers into `interview-prep.md`. |
 | `/build-pdf` | Compiles `resume.tex` / `cover-letter.tex` with `latexmk` and places renamed PDFs in `out/`. |
 
-The `jd-analyzer` agent (in `.claude/agents/`) is used internally by the tailoring
-and cover-letter skills to summarize a job description.
+Two agents live in `.claude/agents/`: `jd-analyzer` summarizes a job description for
+the tailoring and cover-letter skills, and `interview-researcher` does web research
+on a company's interview process for `/interview-prep`.
 
 ## Repo layout
 
@@ -74,7 +79,7 @@ applications/
   <slug>/             One folder per job application (gitignored).
 .claude/
   skills/             The skills listed above.
-  agents/             The jd-analyzer agent.
+  agents/             The jd-analyzer and interview-researcher agents.
 ```
 
 ## What stays private
@@ -87,5 +92,5 @@ applications/
 - `applications/*` — every real application, except `applications/_template/`.
 - Build output (`out/`, `*.pdf`), local Claude Code settings, and OS metadata.
 
-Only the templates, skills, agent, and `.gitignore` are tracked — so the public repo
+Only the templates, skills, agents, and `.gitignore` are tracked — so the public repo
 is a clean, reusable workbench with no one's personal data in it.
