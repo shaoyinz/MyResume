@@ -9,6 +9,11 @@
 # Source-of-truth profile (name, phone, email, full work history)
 shared/profile.md
 
+# Personal interview materials (rehearsed STAR stories, portfolio deck)
+shared/interview/*
+# ...except the blank template, which ships for newcomers.
+!shared/interview/stories.template.md
+
 # Actual job applications (tailored resumes, cover letters, JD copies, private notes).
 # The _template directory is generic scaffolding and stays tracked.
 /applications/*

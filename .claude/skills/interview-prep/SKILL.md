@@ -14,6 +14,9 @@ Writes everything to `applications/<slug>/interview-prep.md`.
 
 - **Application slug** — the folder under `applications/`. If not provided, list
   folders and ask which.
+- **Personal interview materials** (optional) — if `shared/interview/stories.md`
+  (a rehearsed STAR story bank) and/or `shared/interview/portfolio.pdf` (a portfolio
+  / project deck) exist, the skill uses them. They are not required.
 
 ## Preconditions
 
@@ -28,10 +31,16 @@ Writes everything to `applications/<slug>/interview-prep.md`.
 
 If any are missing, stop and tell the user what's needed.
 
+`shared/interview/stories.md` and `shared/interview/portfolio.pdf` are **optional** —
+if either is absent, proceed exactly as before and note in the output that it wasn't
+found. Never fail just because the personal materials are missing.
+
 ## Steps
 
 1. Read `applications/<slug>/{outreach.md, jd.md, resume.tex, notes.md}` and
-   `shared/profile.md`.
+   `shared/profile.md`. Also read `shared/interview/stories.md` if it exists, and
+   read `shared/interview/portfolio.pdf` with the Read tool (use the `pages`
+   parameter) if it exists.
 
 2. **Analyze the outreach email.** From `outreach.md`, extract:
    - **Round** — recruiter screen, hiring-manager call, technical, take-home, panel,
@@ -61,22 +70,39 @@ If any are missing, stop and tell the user what's needed.
    Aim for a focused set (roughly 6–12), not an exhaustive dump. A recruiter screen
    skews toward fit and logistics; a technical round skews toward role-specific.
 
-5. **Answer each question** from `resume.tex` and `profile.md` only:
-   - Behavioral answers use a compact STAR shape (situation, task, action, result)
-     written as a coherent paragraph — don't label the parts.
+5. **Answer each question** from `resume.tex`, `profile.md`, and — when present —
+   `shared/interview/stories.md`:
+   - **For behavioral questions, check `stories.md` first.** If a story's `Themes`
+     match the question, **reuse that rehearsed story**: keep the user's wording and
+     structure, and just tighten it to the question being asked. Do not re-derive an
+     answer the user has already practiced. Only when no story fits, fall back to
+     drafting one from `resume.tex` + `profile.md`.
+   - Behavioral answers (whether reused or drafted) use a compact STAR shape
+     (situation, task, action, result) written as a coherent paragraph — don't label
+     the parts.
    - Technical answers point to the specific project or skill on the resume that
      demonstrates the competency.
    - Fit answers draw on the company angle plus one concrete resume project that
      maps to it.
-   - **Never invent.** Every claim must be traceable to `profile.md` or `resume.tex`.
-     If a question can't be answered from those sources, write
+   - **Never invent.** Every claim must be traceable to `profile.md`, `resume.tex`,
+     or `stories.md` (a story bank entry is user-authored truth — trust it like
+     `profile.md`). If a question can't be answered from those sources, write
      `[NEEDS USER INPUT: <what's missing>]` instead of guessing.
+   - In the `_Sources:_` line, cite `stories.md (<story title>)` for any answer
+     built from the story bank.
 
 6. **Draft questions for the candidate to ask** — 3–5 thoughtful questions the user
    could ask the interviewer(s), informed by the JD, the company research, and the
    named interviewers' backgrounds.
 
-7. Write `applications/<slug>/interview-prep.md` with this structure:
+7. **Map the portfolio deck** — only if `shared/interview/portfolio.pdf` exists.
+   Match likely technical / project questions and the JD's named skills onto
+   specific slides: for each, note which slide the user should walk through ("if
+   asked about spatial joins, slide 6"). Also flag any slide whose content
+   contradicts or is staler than `resume.tex` / `profile.md`, so the user can
+   reconcile it before the interview. Skip this step entirely if no deck is present.
+
+8. Write `applications/<slug>/interview-prep.md` with this structure:
 
    ```
    # Interview Prep — <company> / <role>
@@ -98,12 +124,15 @@ If any are missing, stop and tell the user what's needed.
    ## Company interview process
    <what the research surfaced, with staleness noted>
 
+   ## Portfolio walkthrough
+   <question/skill → slide map; staleness flags. Omit this whole section if no deck.>
+
    ## Likely questions & drafted answers
 
    ### Behavioral
    **Q: <question>**
    <drafted answer>
-   _Sources: profile.md (<fact>), resume.tex (<bullet>)_
+   _Sources: stories.md (<story title>)_   (or profile.md / resume.tex when drafted)
 
    ### Technical / role-specific
    ...
@@ -121,8 +150,13 @@ If any are missing, stop and tell the user what's needed.
    Overwrite `interview-prep.md` if it already exists (re-running refreshes it), but
    tell the user you did.
 
-8. Print to chat a short summary: the round/format/date, how many questions drafted,
+9. Print to chat a short summary: the round/format/date, how many questions drafted,
    and any `[NEEDS USER INPUT]` flags the user must resolve before the interview.
+   Also report a **story-bank gap analysis**: how many behavioral answers reused a
+   rehearsed story from `stories.md` versus were drafted from scratch, and which
+   behavioral themes this round is likely to probe that have **no matching story** —
+   so the user knows which stories to add to `stories.md` next. If `stories.md` or
+   `portfolio.pdf` was absent, say so here.
 
 ## Style
 
@@ -136,8 +170,9 @@ If any are missing, stop and tell the user what's needed.
 
 - Do not invent metrics, employers, dates, technologies, interview rounds, or
   interviewer details. If a source lacks it, flag it or say it's unknown.
-- Do not edit `resume.tex`, `jd.md`, `questions.md`, `outreach.md`, or
-  `shared/profile.md`. This skill is write-only against `interview-prep.md`.
+- Do not edit `resume.tex`, `jd.md`, `questions.md`, `outreach.md`,
+  `shared/profile.md`, or anything under `shared/interview/`. This skill is
+  write-only against `interview-prep.md`.
 - Do not commit. The user controls git.
 
 ## Output

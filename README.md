@@ -47,7 +47,9 @@ instructed to **never invent** experience, metrics, or skills.
      `/answer-questions <slug>` to draft answers into `notes.md`.
    - When an interview is scheduled, paste the outreach email into `outreach.md`,
      then `/interview-prep <slug>` to analyze it, research the company's interview
-     process, and draft likely questions with answers into `interview-prep.md`.
+     process, and draft likely questions with answers into `interview-prep.md`. If
+     you keep rehearsed STAR stories in `shared/interview/stories.md` and a portfolio
+     deck in `shared/interview/portfolio.pdf`, the skill reuses them (see below).
 
 ## Skills
 
@@ -58,7 +60,7 @@ instructed to **never invent** experience, metrics, or skills.
 | `/tailor-resume` | Rewrites an application's `resume.tex` to match its `jd.md`, drawing facts only from `profile.md`. |
 | `/cover-letter` | Drafts a `cover-letter.tex` for an application from the JD, resume, and profile. |
 | `/answer-questions` | Drafts answers to the questions in `questions.md`, grounded in the resume and profile. |
-| `/interview-prep` | Analyzes the outreach email in `outreach.md`, researches the company's interview process online, and drafts likely questions with answers into `interview-prep.md`. |
+| `/interview-prep` | Analyzes the outreach email in `outreach.md`, researches the company's interview process online, and drafts likely questions with answers into `interview-prep.md`. Reuses rehearsed stories and the portfolio deck from `shared/interview/` when present. |
 | `/build-pdf` | Compiles `resume.tex` / `cover-letter.tex` with `latexmk` and places renamed PDFs in `out/`. |
 
 Two agents live in `.claude/agents/`: `jd-analyzer` summarizes a job description for
@@ -74,6 +76,10 @@ shared/
   profile.template.md Blank profile template (ships publicly).
   profile.md          YOUR real profile — gitignored, never published.
   preamble.tex        Shared LaTeX preamble.
+  interview/          Optional personal interview materials (gitignored).
+    stories.template.md Blank STAR story-bank template (ships publicly).
+    stories.md        YOUR rehearsed STAR stories — interview-prep reuses them.
+    portfolio.pdf     YOUR portfolio / project deck — interview-prep maps it.
 applications/
   _template/          Generic scaffolding stubs (tracked).
   <slug>/             One folder per job application (gitignored).
@@ -87,6 +93,8 @@ applications/
 `.gitignore` keeps your personal content out of the public repo:
 
 - `shared/profile.md` — your real name, contact, and full work history.
+- `shared/interview/` — your rehearsed stories and portfolio deck (the blank
+  `stories.template.md` is the one exception that ships).
 - `base/*/main.tex` — base resumes hard-code your contact info (the generic
   `base/_template/main.tex` is the one exception that ships).
 - `applications/*` — every real application, except `applications/_template/`.
