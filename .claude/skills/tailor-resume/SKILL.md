@@ -39,6 +39,7 @@ If any are missing, stop and tell the user what's needed.
 ## Style
 
 - **One page, always.** The final PDF must fit on a single letter-size page. If tailoring pushes content past one page, cut: drop the least-JD-relevant project, then the least-JD-relevant bullets, then tighten the Summary. Do not shrink fonts, margins, or vertical spacing to fake it — those are tuned in the base. After `/build-pdf`, verify the page count and trim further if needed before reporting done.
+- **No orphan/widow lines.** After building the PDF, visually inspect each bullet. If a bullet wraps so the last line has only 1–2 words (e.g., a lone "analysis." or "tooling." dangling on its own line), rewrite it — either trim words so the bullet fits in one fewer line, or rephrase so the final line carries ≥3 words. Comma-separated skill lists are exempt (continuation reads naturally). Iterate build → inspect → fix until clean.
 - LaTeX edits should be surgical. Don't reformat unchanged sections.
 - Preserve the resume's existing macros and structure.
 - If the JD is in a language other than the resume's language, ask before translating.
