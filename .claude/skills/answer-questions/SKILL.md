@@ -7,6 +7,8 @@ description: Draft answers to application-form / screening questions for an appl
 
 Use when the user has finished tailoring a resume and now needs to write answers to job-application questions (screening forms, "tell us about a time...", "why this role", etc.). Reads JD + tailored resume + profile + questions, appends drafted answers to `applications/<slug>/notes.md`.
 
+Avoid using dash - in the middle of a sentence.
+
 ## Inputs
 
 - **Application slug** — the folder under `applications/`. If not provided, list folders and ask which.
