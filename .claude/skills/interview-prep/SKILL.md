@@ -1,6 +1,6 @@
 ---
 name: interview-prep
-description: Prepare for an interview for an applications/<slug>/ folder. Analyzes the outreach email in outreach.md, researches the company's interview process on the web, and drafts likely questions with answers grounded in resume.tex and shared/profile.md. Writes interview-prep.md.
+description: Prepare for an interview for an applications/<slug>/ folder. Analyzes the outreach email in outreach.md, researches the company's interview process on the web, drafts a tailored 2-minute background walkthrough, and drafts likely questions with answers grounded in resume.tex and shared/profile.md. Writes interview-prep.md.
 ---
 
 # interview-prep
@@ -60,17 +60,38 @@ found. Never fail just because the personal materials are missing.
    per-interviewer background. If it reports `[no reliable sources found]`, proceed
    using the JD and email alone and say so in the output.
 
-4. **Draft likely questions.** Build a question set appropriate to the round
+4. **Draft the 2-minute background walkthrough.** This is the spoken answer to
+   "walk me through your background" / "tell me about yourself" — the opener of
+   almost every interview. The user wants it freshly tailored to each JD and
+   resume. Write a first-person script of roughly 260–320 words (about 2 minutes
+   spoken) that:
+   - Opens with a one-line identity, drawn from `profile.md`'s elevator pitch and
+     aligned to the JD's role title.
+   - Moves through 2–3 career beats in a deliberate order — sequenced so each beat
+     sets up the next and the most JD-relevant experience gets the most weight and
+     detail, rather than strict reverse-chronological coverage.
+   - Foregrounds the experience, skills, and domain the JD emphasizes; compresses
+     or omits what the JD does not care about.
+   - Quantifies impact the way the resume does — keep the numbers.
+   - Closes with a forward-looking line connecting the user's trajectory to *this*
+     role and company.
+   - Stays fully traceable to `resume.tex` / `profile.md`; never invent. Flag any
+     gap with `[NEEDS USER INPUT: <what's missing>]`.
+   This walkthrough is also the answer to "tell me about yourself," so do not draft
+   that as a separate question in the steps below — point to this section instead.
+
+5. **Draft likely questions.** Build a question set appropriate to the round
    identified in step 2, drawing on the JD's required skills, the researcher's
    reported questions, and the role type. Group them:
    - **Behavioral** — "tell us about a time...", teamwork, conflict, failure.
    - **Technical / role-specific** — questions on the skills and tools the JD names.
    - **Company / role fit** — why this company, why this role, what you know about
-     the product.
+     the product. (Do not include "tell me about yourself" here — the 2-minute
+     walkthrough from step 4 already covers it.)
    Aim for a focused set (roughly 6–12), not an exhaustive dump. A recruiter screen
    skews toward fit and logistics; a technical round skews toward role-specific.
 
-5. **Answer each question** from `resume.tex`, `profile.md`, and — when present —
+6. **Answer each question** from `resume.tex`, `profile.md`, and — when present —
    `shared/interview/stories.md`:
    - **For behavioral questions, check `stories.md` first.** If a story's `Themes`
      match the question, **reuse that rehearsed story**: keep the user's wording and
@@ -91,18 +112,18 @@ found. Never fail just because the personal materials are missing.
    - In the `_Sources:_` line, cite `stories.md (<story title>)` for any answer
      built from the story bank.
 
-6. **Draft questions for the candidate to ask** — 3–5 thoughtful questions the user
+7. **Draft questions for the candidate to ask** — 3–5 thoughtful questions the user
    could ask the interviewer(s), informed by the JD, the company research, and the
    named interviewers' backgrounds.
 
-7. **Map the portfolio deck** — only if `shared/interview/portfolio.pdf` exists.
+8. **Map the portfolio deck** — only if `shared/interview/portfolio.pdf` exists.
    Match likely technical / project questions and the JD's named skills onto
    specific slides: for each, note which slide the user should walk through ("if
    asked about spatial joins, slide 6"). Also flag any slide whose content
    contradicts or is staler than `resume.tex` / `profile.md`, so the user can
    reconcile it before the interview. Skip this step entirely if no deck is present.
 
-8. Write `applications/<slug>/interview-prep.md` with this structure:
+9. Write `applications/<slug>/interview-prep.md` with this structure:
 
    ```
    # Interview Prep — <company> / <role>
@@ -127,6 +148,10 @@ found. Never fail just because the personal materials are missing.
    ## Portfolio walkthrough
    <question/skill → slide map; staleness flags. Omit this whole section if no deck.>
 
+   ## 2-minute background walkthrough
+   <the ~260–320-word first-person script from step 4>
+   _Sources: resume.tex / profile.md_
+
    ## Likely questions & drafted answers
 
    ### Behavioral
@@ -150,8 +175,9 @@ found. Never fail just because the personal materials are missing.
    Overwrite `interview-prep.md` if it already exists (re-running refreshes it), but
    tell the user you did.
 
-9. Print to chat a short summary: the round/format/date, how many questions drafted,
-   and any `[NEEDS USER INPUT]` flags the user must resolve before the interview.
+10. Print to chat a short summary: the round/format/date, that the 2-minute
+   walkthrough was drafted, how many questions drafted, and any
+   `[NEEDS USER INPUT]` flags the user must resolve before the interview.
    Also report a **story-bank gap analysis**: how many behavioral answers reused a
    rehearsed story from `stories.md` versus were drafted from scratch, and which
    behavioral themes this round is likely to probe that have **no matching story** —
